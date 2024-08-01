@@ -38,4 +38,21 @@ class AutoresApp(ttk.Frame):
         self.nacionalidad_entry = ttk.Entry(self.form_frame)
         self.nacionalidad_entry.grid(row=3, column=1)
 
+        self.add_button = ttk.Button(self.form_frame, text="Agregar", command=self.add_autor)
+        self.add_button.grid(row=4, column=0, pady=10)
+
+        self.edit_button = ttk.Button(self.form_frame, text="Editar", command=self.edit_autor)
+        self.edit_button.grid(row=4, column=1, pady=10)
+
+        self.delete_button = ttk.Button(self.form_frame, text="Eliminar", command=self.delete_autor)
+        self.delete_button.grid(row=4, column=2, pady=10)
+
+        self.search_label = ttk.Label(self.form_frame, text="Buscar:")
+        self.search_label.grid(row=5, column=0)
+        self.search_entry = ttk.Entry(self.form_frame)
+        self.search_entry.grid(row=5, column=1)
+
+        self.search_button = ttk.Button(self.form_frame, text="Buscar", command=self.search_autor)
+        self.search_button.grid(row=5, column=2)
+
 
