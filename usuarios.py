@@ -201,7 +201,49 @@ class UsuariosApp(ttk.Frame):
         else:
             self.populate_tree()
 
+    def generate_carnet(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            usuario_id = self.tree.item(selected_item)['values'][0]
+            nombres = self.tree.item(selected_item)['values'][1]
+            apellidos = self.tree.item(selected_item)['values'][2]
+            email = self.tree.item(selected_item)['values'][3]
+            idrol = self.tree.item(selected_item)['values'][4]
 
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute('SELECT foto_perfil FROM usuarios WHERE idusuario=?', (usuario_id,))
+            foto_perfil = cursor.fetchone()[0]
+
+            # Crear el documento PDF usando reportlab
+            pdf = canvas.Canvas(f"carnet_usuario_{usuario_id}.pdf")
+            pdf.setFont("Helvetica", 12)
+            pdf.drawString(100, 750, "Carnet de Usuario")
+            pdf.drawString(100, 730, f"ID: {usuario_id}")
+            pdf.drawString(100, 710, f"Nombres: {nombres}")
+            pdf.drawString(100, 690, f"Apellidos: {apellidos}")
+            pdf.drawString(100, 670, f"Email: {email}")
+            pdf.drawString(100, 650, f"ID Rol: {idrol}")
+
+            if foto_perfil:
+                image_stream = io.BytesIO(foto_perfil)
+                img = Image.open(image_stream)
+                img.thumbnail((100, 100))
+                img_path = f'temp_image_{usuario_id}.png'
+                img.save(img_path)
+                pdf.drawImage(img_path, 400, 700, width=100, height=100)
+
+            pdf.save()
+
+            if foto_perfil:
+                os.remove(img_path)  # Eliminar la imagen temporal
+
+            connection.close()
+            messagebox.showinfo("Éxito", f"Se ha generado el carnet como carnet_usuario_{usuario_id}.pdf")
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un usuario para generar el carnet")
+
+    
     def import_excel(self):
         file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
         if file_path:
