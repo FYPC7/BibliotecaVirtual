@@ -150,3 +150,29 @@ class CategoriasApp(ttk.Frame):
             connection.close()
         else:
             self.populate_tree()
+
+    def populate_initial_data(self):
+        initial_categories = [
+            ("Cate.1", "Ficción"),
+            ("Cate.2", "No Ficción"),
+            ("Cate.3", "Misterio"),
+            ("Cate.4", "Biografía"),
+            ("Cate.5", "Historia"),
+            ("Cate.6", "Ciencia"),
+            ("Cate.7", "Fantasía"),
+            ("Cate.8", "Infantil"),
+            ("Cate.9", "Romance"),
+            ("Cate.10", "Aventura")
+        ]
+
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT COUNT(*) FROM categorias')
+        count = cursor.fetchone()[0]
+
+        if count == 0:
+            for categoria in initial_categories:
+                cursor.execute('INSERT INTO categorias (idcategoria, NOMBRE) VALUES (?, ?)', categoria)
+            connection.commit()
+        connection.close()
+        self.populate_tree()
