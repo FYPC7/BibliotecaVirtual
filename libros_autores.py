@@ -76,3 +76,18 @@ class LibrosAutoresApp(ttk.Frame):
             messagebox.showerror("Error en la base de datos", str(e))
         finally:
             connection.close()
+
+    def add_libro_autor(self):
+        idlibro = self.idlibro_entry.get()
+        idautor = self.idautor_entry.get()
+
+        if idlibro and idautor:
+            self.execute_query('''
+                INSERT INTO libros_autores (idlibro, idautor) 
+                VALUES (?, ?)
+            ''', (idlibro, idautor))
+            messagebox.showinfo("Éxito", "Libro-autor agregado correctamente")
+            self.populate_tree()
+            self.clear_form()
+        else:
+            messagebox.showerror("Error", "Todos los campos son obligatorios")
