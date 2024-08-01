@@ -81,3 +81,15 @@ class PrestamosApp(ttk.Frame):
                 fecha_devolucion TEXT
             )
         ''')
+
+    def populate_tree(self):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM prestamos')
+        prestamos = cursor.fetchall()
+        for prestamo in prestamos:
+            self.tree.insert('', tk.END, values=prestamo)
+        connection.close()
