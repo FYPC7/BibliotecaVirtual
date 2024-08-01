@@ -176,3 +176,10 @@ class CategoriasApp(ttk.Frame):
             connection.commit()
         connection.close()
         self.populate_tree()
+
+    def sort_column(self, col, reverse):
+        data_list = [(self.tree.set(child, col), child) for child in self.tree.get_children('')]
+        data_list.sort(reverse=reverse)
+        for index, (val, child) in enumerate(data_list):
+            self.tree.move(child, '', index)
+        self.tree.heading(col, command=lambda: self.sort_column(col, not reverse))
