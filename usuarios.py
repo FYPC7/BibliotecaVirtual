@@ -178,3 +178,25 @@ class UsuariosApp(ttk.Frame):
         self.idrol_entry.delete(0, tk.END)
         self.image_path = None
         self.photo_label.configure(image='')
+
+    def search_usuario(self):
+        search_term = self.search_entry.get()
+
+        if search_term:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT idusuario, NOMBRES, APELLIDOS, EMAIL, idrol FROM usuarios 
+                WHERE NOMBRES LIKE ? OR APELLIDOS LIKE ? OR EMAIL LIKE ? OR idrol LIKE ?
+            ''', (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
+            usuarios = cursor.fetchall()
+
+            for row in self.tree.get_children():
+                self.tree.delete(row)
+
+            for usuario in usuarios:
+                self.tree.insert('', tk.END, values=usuario)
+            
+            connection.close()
+        else:
+            self.populate_tree()
