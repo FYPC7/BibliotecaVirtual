@@ -94,3 +94,20 @@ class AutoresApp(ttk.Frame):
         for autor in autores:
             self.tree.insert('', tk.END, values=autor)
         connection.close()
+
+    def add_autor(self):
+        nombres = self.nombres_entry.get()
+        apellidos = self.apellidos_entry.get()
+        dni = self.dni_entry.get()
+        nacionalidad = self.nacionalidad_entry.get()
+
+        if nombres and apellidos and dni and nacionalidad:
+            self.execute_query('''
+                INSERT INTO autores (NOMBRES, APELLIDOS, DNI, NACIONALIDAD) 
+                VALUES (?, ?, ?, ?)
+            ''', (nombres, apellidos, dni, nacionalidad))
+            messagebox.showinfo("Éxito", "Autor agregado correctamente")
+            self.populate_tree()
+            self.clear_form()
+        else:
+            messagebox.showerror("Error", "Todos los campos son obligatorios")
