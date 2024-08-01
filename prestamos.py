@@ -148,3 +148,9 @@ class PrestamosApp(ttk.Frame):
                 self.clear_form()
         else:
             messagebox.showerror("Error", "Por favor, selecciona un préstamo para eliminar")
+
+    def clear_form(self):
+        self.idlibro_entry.delete(0, tk.END)
+        self.idusuario_entry.delete(0, tk.END)
+        self.fecha_prestamo_entry.delete(0, tk.END)
+        self.fecha_devolucion_entry.delete(0, tk.END)
