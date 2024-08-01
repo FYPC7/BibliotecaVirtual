@@ -87,3 +87,19 @@ class RolesApp(ttk.Frame):
                 messagebox.showerror("Error", "El campo nombre es obligatorio")
         else:
             messagebox.showerror("Error", "Por favor, selecciona un rol para editar")
+
+    def delete_rol(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            rol_id = self.tree.item(selected_item)['values'][0]
+
+            confirm = messagebox.askyesno("Confirmar", "¿Estás seguro de querer eliminar este rol?")
+            if confirm:
+                self.execute_query('''
+                    DELETE FROM roles WHERE idrol=?
+                ''', (rol_id,))
+                messagebox.showinfo("Éxito", "Rol eliminado correctamente")
+                self.populate_tree()
+                self.clear_form()
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un rol para eliminar")
