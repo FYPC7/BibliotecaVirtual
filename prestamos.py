@@ -203,3 +203,11 @@ class PrestamosApp(ttk.Frame):
                 connection.close()
             except Exception as e:
                 messagebox.showerror("Error", f"Error al exportar datos: {e}")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Gestión de Préstamos")
+    root.geometry("600x400")
+    app = PrestamosApp(root)
+    app.pack(expand=True, fill='both')
+    root.mainloop()
