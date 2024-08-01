@@ -93,3 +93,15 @@ class UsuariosApp(ttk.Frame):
         finally:
             connection.close()
 
+    def populate_tree(self):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT idusuario, NOMBRES, APELLIDOS, EMAIL, idrol FROM usuarios')
+        usuarios = cursor.fetchall()
+        for usuario in usuarios:
+            self.tree.insert('', tk.END, values=usuario)
+        connection.close()
+
