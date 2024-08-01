@@ -110,3 +110,18 @@ class CategoriasApp(ttk.Frame):
                 messagebox.showerror("Error", "El campo nombre es obligatorio")
         else:
             messagebox.showerror("Error", "Por favor, selecciona una categoría para editar")
+
+    def delete_categoria(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            categoria_id = self.tree.item(selected_item)['values'][0]
+
+            confirm = messagebox.askyesno("Confirmar", "¿Estás seguro de querer eliminar esta categoría?")
+            if confirm:
+                self.execute_query('''
+                    DELETE FROM categorias WHERE idcategoria=?
+                ''', (categoria_id,))
+                messagebox.showinfo("Éxito", "Categoría eliminada correctamente")
+                self.populate_tree()
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona una categoría para eliminar")
