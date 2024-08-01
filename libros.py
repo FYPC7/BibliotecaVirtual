@@ -160,3 +160,19 @@ class LibrosApp(ttk.Frame):
                 messagebox.showerror("Error", "Todos los campos son obligatorios")
         else:
             messagebox.showerror("Error", "Por favor, selecciona un libro para editar")
+
+    def delete_libro(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            libro_id = self.tree.item(selected_item)['values'][0]
+
+            confirm = messagebox.askyesno("Confirmar", "¿Estás seguro de querer eliminar este libro?")
+            if confirm:
+                self.execute_query('''
+                    DELETE FROM libros WHERE idlibro=?
+                ''', (libro_id,))
+                messagebox.showinfo("Éxito", "Libro eliminado correctamente")
+                self.populate_tree()
+                self.clear_form()
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un libro para eliminar")
