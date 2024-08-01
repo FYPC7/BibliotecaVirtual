@@ -110,3 +110,25 @@ class PrestamosApp(ttk.Frame):
             self.clear_form()
         else:
             messagebox.showerror("Error", "Todos los campos son obligatorios")
+
+    def edit_prestamo(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            idlibro = self.idlibro_entry.get()
+            idusuario = self.idusuario_entry.get()
+            fecha_prestamo = self.fecha_prestamo_entry.get()
+            fecha_devolucion = self.fecha_devolucion_entry.get()
+            prestamo_id = self.tree.item(selected_item)['values'][0]
+
+            if idlibro and idusuario and fecha_prestamo:
+                self.execute_query('''
+                    UPDATE prestamos SET idlibro=?, idusuario=?, fecha_prestamo=?, fecha_devolucion=? 
+                    WHERE idprestamo=?
+                ''', (idlibro, idusuario, fecha_prestamo, fecha_devolucion, prestamo_id))
+                messagebox.showinfo("Éxito", "Préstamo actualizado correctamente")
+                self.populate_tree()
+                self.clear_form()
+            else:
+                messagebox.showerror("Error", "Todos los campos son obligatorios")
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un préstamo para editar")
