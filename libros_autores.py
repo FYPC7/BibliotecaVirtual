@@ -49,3 +49,14 @@ class LibrosAutoresApp(ttk.Frame):
 
         self.search_button = ttk.Button(self.form_frame, text="Buscar", command=self.search_libro_autor)
         self.search_button.grid(row=4, column=2, padx=5, pady=5)
+
+    def execute_query(self, query, parameters=()):
+        try:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute(query, parameters)
+            connection.commit()
+        except sqlite3.Error as e:
+            messagebox.showerror("Error en la base de datos", str(e))
+        finally:
+            connection.close()
