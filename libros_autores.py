@@ -91,3 +91,25 @@ class LibrosAutoresApp(ttk.Frame):
             self.clear_form()
         else:
             messagebox.showerror("Error", "Todos los campos son obligatorios")
+
+    def edit_libro_autor(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            idlibro = self.idlibro_entry.get()
+            idautor = self.idautor_entry.get()
+            old_idlibro, old_idautor = self.tree.item(selected_item)['values']
+
+            if idlibro and idautor:
+                self.execute_query('''
+                    UPDATE libros_autores 
+                    SET idlibro=?, idautor=? 
+                    WHERE idlibro=? AND idautor=?
+                ''', (idlibro, idautor, old_idlibro, old_idautor))
+                messagebox.showinfo("Éxito", "Libro-autor actualizado correctamente")
+                self.populate_tree()
+                self.clear_form()
+            else:
+                messagebox.showerror("Error", "Todos los campos son obligatorios")
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un libro-autor para editar")
+
