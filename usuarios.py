@@ -28,3 +28,29 @@ class UsuariosApp(ttk.Frame):
 
         self.create_form()
         self.create_buttons()
+
+    def create_form(self):
+        self.nombres_label = ttk.Label(self.form_frame, text="Nombres:")
+        self.nombres_label.grid(row=0, column=0)
+        self.nombres_entry = ttk.Entry(self.form_frame)
+        self.nombres_entry.grid(row=0, column=1)
+
+        self.apellidos_label = ttk.Label(self.form_frame, text="Apellidos:")
+        self.apellidos_label.grid(row=1, column=0)
+        self.apellidos_entry = ttk.Entry(self.form_frame)
+        self.apellidos_entry.grid(row=1, column=1)
+
+        self.email_label = ttk.Label(self.form_frame, text="Email:")
+        self.email_label.grid(row=2, column=0)
+        self.email_entry = ttk.Entry(self.form_frame)
+        self.email_entry.grid(row=2, column=1)
+
+        self.idrol_label = ttk.Label(self.form_frame, text="ID Rol:")
+        self.idrol_label.grid(row=3, column=0)
+        self.idrol_entry = ttk.Entry(self.form_frame)
+        self.idrol_entry.grid(row=3, column=1)
+
+        self.photo_label = ttk.Label(self.form_frame, text="Foto de perfil:")
+        self.photo_label.grid(row=4, column=0)
+        self.photo_button = ttk.Button(self.form_frame, text="Seleccionar imagen", command=self.load_image)
+        self.photo_button.grid(row=4, column=1)
