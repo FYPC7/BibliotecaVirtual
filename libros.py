@@ -110,3 +110,15 @@ class LibrosApp(ttk.Frame):
         cursor.execute(query, parameters)
         connection.commit()
         connection.close()
+
+    def populate_tree(self):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM libros')
+        libros = cursor.fetchall()
+        for libro in libros:
+            self.tree.insert('', tk.END, values=libro)
+        connection.close()
