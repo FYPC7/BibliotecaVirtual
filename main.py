@@ -54,3 +54,15 @@ class LoginApp(tk.Tk):
         self.login_button = ttk.Button(self, text="INGRESAR", command=self.check_credentials, width=15)
         self.login_button.pack(pady=20)
 
+
+    def check_credentials(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        role = self.role_combobox.get()
+
+        if username in USERS and USERS[username]["password"] == password and USERS[username]["role"] == role:
+            self.destroy()
+            app = MainApp(role)
+            app.mainloop()
+        else:
+            messagebox.showerror("Error", "Invalid credentials or role")
