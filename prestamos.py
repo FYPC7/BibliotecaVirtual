@@ -176,3 +176,18 @@ class PrestamosApp(ttk.Frame):
             connection.close()
         else:
             self.populate_tree()
+
+    def import_excel(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")])
+        if file_path:
+            try:
+                df = pd.read_excel(file_path)
+                for index, row in df.iterrows():
+                    self.execute_query('''
+                        INSERT INTO prestamos (idlibro, idusuario, fecha_prestamo, fecha_devolucion) 
+                        VALUES (?, ?, ?, ?)
+                    ''', (row['idlibro'], row['idusuario'], row['fecha_prestamo'], row['fecha_devolucion']))
+                messagebox.showinfo("Éxito", "Datos importados correctamente")
+                self.populate_tree()
+            except Exception as e:
+                messagebox.showerror("Error", f"Error al importar datos: {e}")
