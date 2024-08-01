@@ -86,3 +86,26 @@ def create_tables():
         print(f"Error al crear tablas: {e}")
     finally:
         connection.close()
+
+def add_column_to_table():
+    try:
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+
+        # Verificar si la columna ISBN ya existe en la tabla libros
+        cursor.execute('PRAGMA table_info(libros)')
+        columns = [column[1] for column in cursor.fetchall()]
+        
+        if 'ISBN' not in columns:
+            cursor.execute('''
+                ALTER TABLE libros
+                ADD COLUMN ISBN TEXT
+            ''')
+            connection.commit()
+            print("Columna ISBN agregada correctamente.")
+        else:
+            print("La columna ISBN ya existe.")
+    except sqlite3.Error as e:
+        print(f"Error al agregar columna ISBN: {e}")
+    finally:
+        connection.close()
