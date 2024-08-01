@@ -56,3 +56,12 @@ class AutoresApp(ttk.Frame):
         self.search_button.grid(row=5, column=2)
 
 
+        self.import_button = ttk.Button(self.form_frame, text="Importar Excel", command=self.import_excel)
+        self.import_button.grid(row=6, column=0, pady=10)
+
+        self.export_button = ttk.Button(self.form_frame, text="Exportar Excel", command=self.export_excel)
+        self.export_button.grid(row=6, column=1, pady=10)
+
+        self.create_table()
+        self.populate_tree()
+
