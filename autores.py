@@ -83,3 +83,14 @@ class AutoresApp(ttk.Frame):
             )
         ''')
         
+    def populate_tree(self):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM autores')
+        autores = cursor.fetchall()
+        for autor in autores:
+            self.tree.insert('', tk.END, values=autor)
+        connection.close()
