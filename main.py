@@ -135,3 +135,10 @@ class MainApp(tk.Tk):
             }
         })
         self.style.theme_use("custom_theme")
+
+    def create_header(self):
+        header_frame = ttk.Frame(self, padding=(10, 10), style="Header.TFrame")
+        header_frame.pack(fill='x')
+
+        title_label = ttk.Label(header_frame, text="BIBLIOTECA UNIVERSITARIA", style="Header.TLabel")
+        title_label.pack(side='left', padx=(10, 0))
