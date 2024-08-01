@@ -132,3 +132,19 @@ class PrestamosApp(ttk.Frame):
                 messagebox.showerror("Error", "Todos los campos son obligatorios")
         else:
             messagebox.showerror("Error", "Por favor, selecciona un préstamo para editar")
+
+    def delete_prestamo(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            prestamo_id = self.tree.item(selected_item)['values'][0]
+
+            confirm = messagebox.askyesno("Confirmar", "¿Estás seguro de querer eliminar este préstamo?")
+            if confirm:
+                self.execute_query('''
+                    DELETE FROM prestamos WHERE idprestamo=?
+                ''', (prestamo_id,))
+                messagebox.showinfo("Éxito", "Préstamo eliminado correctamente")
+                self.populate_tree()
+                self.clear_form()
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un préstamo para eliminar")
