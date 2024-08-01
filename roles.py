@@ -38,3 +38,10 @@ class RolesApp(ttk.Frame):
 
         self.populate_tree()
 
+    def execute_query(self, query, parameters=()):
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute(query, parameters)
+        connection.commit()
+        connection.close()
+
