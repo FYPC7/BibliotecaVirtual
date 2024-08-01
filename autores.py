@@ -72,3 +72,14 @@ class AutoresApp(ttk.Frame):
         connection.commit()
         connection.close()
 
+    def create_table(self):
+        self.execute_query('''
+            CREATE TABLE IF NOT EXISTS autores (
+                idautor INTEGER PRIMARY KEY AUTOINCREMENT,
+                NOMBRES TEXT NOT NULL,
+                APELLIDOS TEXT NOT NULL,
+                DNI TEXT NOT NULL,
+                NACIONALIDAD TEXT NOT NULL
+            )
+        ''')
+        
