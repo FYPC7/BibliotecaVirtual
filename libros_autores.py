@@ -60,3 +60,19 @@ class LibrosAutoresApp(ttk.Frame):
             messagebox.showerror("Error en la base de datos", str(e))
         finally:
             connection.close()
+
+    def populate_tree(self):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+
+        try:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute('SELECT * FROM libros_autores')
+            libros_autores = cursor.fetchall()
+            for libro_autor in libros_autores:
+                self.tree.insert('', tk.END, values=libro_autor)
+        except sqlite3.Error as e:
+            messagebox.showerror("Error en la base de datos", str(e))
+        finally:
+            connection.close()
