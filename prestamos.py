@@ -154,3 +154,25 @@ class PrestamosApp(ttk.Frame):
         self.idusuario_entry.delete(0, tk.END)
         self.fecha_prestamo_entry.delete(0, tk.END)
         self.fecha_devolucion_entry.delete(0, tk.END)
+
+    def search_prestamo(self):
+        search_term = self.search_entry.get()
+
+        if search_term:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT * FROM prestamos 
+                WHERE idlibro LIKE ? OR idusuario LIKE ? OR fecha_prestamo LIKE ? OR fecha_devolucion LIKE ?
+            ''', (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
+            prestamos = cursor.fetchall()
+
+            for row in self.tree.get_children():
+                self.tree.delete(row)
+
+            for prestamo in prestamos:
+                self.tree.insert('', tk.END, values=prestamo)
+            
+            connection.close()
+        else:
+            self.populate_tree()
