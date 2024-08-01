@@ -78,3 +78,17 @@ class CategoriasApp(ttk.Frame):
             self.tree.insert('', tk.END, values=categoria)
         connection.close()
 
+    def add_categoria(self):
+        nombre = self.nombre_entry.get()
+
+        if nombre:
+            cursor = self.tree.get_children()
+            new_id = f'Cate.{len(cursor) + 1}'
+            self.execute_query('''
+                INSERT INTO categorias (idcategoria, NOMBRE) 
+                VALUES (?, ?)
+            ''', (new_id, nombre))
+            messagebox.showinfo("Éxito", "Categoría agregada correctamente")
+            self.populate_tree()
+        else:
+            messagebox.showerror("Error", "El campo nombre es obligatorio")
