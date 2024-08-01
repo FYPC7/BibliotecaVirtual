@@ -9,7 +9,11 @@ from prestamos import PrestamosApp
 from roles import RolesApp
 from usuarios import UsuariosApp
 
-
+USERS = {
+    "admin": {"password": "admin.45", "role": "admin"},
+    "bibliotecario": {"password": "bibliotecario.45", "role": "bibliotecario"},
+    "estudiante": {"password": "estudiante.45", "role": "estudiante"},
+}
 
 class LoginApp(tk.Tk):
     def __init__(self):
@@ -20,4 +24,3 @@ class LoginApp(tk.Tk):
 
         # Crear los widgets
         self.create_widgets()
-
