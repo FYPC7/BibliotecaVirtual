@@ -122,3 +122,20 @@ class LibrosApp(ttk.Frame):
         for libro in libros:
             self.tree.insert('', tk.END, values=libro)
         connection.close()
+
+    def add_libro(self):
+        titulo = self.titulo_entry.get()
+        idcategoria = self.categoria_entry.get()
+        autor = self.autor_entry.get()
+        isbn = self.isbn_entry.get()
+
+        if titulo and idcategoria and autor and isbn:
+            self.execute_query('''
+                INSERT INTO libros (TITULO, idcategoria, AUTOR, ISBN) 
+                VALUES (?, ?, ?, ?)
+            ''', (titulo, idcategoria, autor, isbn))
+            messagebox.showinfo("Éxito", "Libro agregado correctamente")
+            self.populate_tree()
+            self.clear_form()
+        else:
+            messagebox.showerror("Error", "Todos los campos son obligatorios")
