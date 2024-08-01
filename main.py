@@ -87,3 +87,51 @@ class MainApp(tk.Tk):
         self.add_tabs()
 
         self.conn = sqlite3.connect('library.db')
+
+    def configure_style(self):
+        self.style.theme_create("custom_theme", parent="alt", settings={
+            "TNotebook": {
+                "configure": {
+                    "tabmargins": [0, 5, 0, 0],
+                    "background": "#34495E",
+                    "borderwidth": 0,
+                }
+            },
+            "TNotebook.Tab": {
+                "configure": {
+                    "padding": [15, 10],
+                    "font": ('Arial', 12, 'bold'),
+                },
+                "map": {
+                    "background": [("selected", "#1ABC9C"), ("active", "#16A085")],
+                    "foreground": [("selected", "#ffffff"), ("active", "#000000")],
+                    "expand": [("selected", [1, 1, 1, 0])],
+                    "padding": [("selected", [15, 10])],
+                }
+            },
+            "TFrame": {
+                "configure": {
+                    "background": "#ECF0F1",
+                }
+            },
+            "TLabel": {
+                "configure": {
+                    "background": "#ECF0F1",
+                    "foreground": "#2C3E50",
+                }
+            },
+            "TButton": {
+                "configure": {
+                    "padding": [5, 5],
+                    "background": "#1ABC9C",
+                    "foreground": "#ffffff",
+                    "borderwidth": 1,
+                    "relief": "flat",
+                },
+                "map": {
+                    "background": [("active", "#16A085")],
+                    "foreground": [("active", "#000000")],
+                }
+            }
+        })
+        self.style.theme_use("custom_theme")
