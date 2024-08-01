@@ -176,3 +176,18 @@ class AutoresApp(ttk.Frame):
             connection.close()
         else:
             self.populate_tree()
+
+    def import_excel(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")])
+        if file_path:
+            try:
+                df = pd.read_excel(file_path)
+                for index, row in df.iterrows():
+                    self.execute_query('''
+                        INSERT INTO autores (NOMBRES, APELLIDOS, DNI, NACIONALIDAD) 
+                        VALUES (?, ?, ?, ?)
+                    ''', (row['NOMBRES'], row['APELLIDOS'], row['DNI'], row['NACIONALIDAD']))
+                messagebox.showinfo("Éxito", "Datos importados correctamente")
+                self.populate_tree()
+            except Exception as e:
+                messagebox.showerror("Error", f"Error al importar datos: {e}")
