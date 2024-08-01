@@ -114,3 +114,22 @@ class UsuariosApp(ttk.Frame):
             self.profile_image = ImageTk.PhotoImage(img)
             self.photo_label.configure(image=self.profile_image)
             self.photo_label.image = self.profile_image
+
+    def add_usuario(self):
+        nombres = self.nombres_entry.get()
+        apellidos = self.apellidos_entry.get()
+        email = self.email_entry.get()
+        idrol = self.idrol_entry.get()
+
+        if nombres and apellidos and email and idrol and self.image_path:
+            with open(self.image_path, 'rb') as f:
+                image_data = f.read()
+            self.execute_query('''
+                INSERT INTO usuarios (NOMBRES, APELLIDOS, EMAIL, idrol, foto_perfil) 
+                VALUES (?, ?, ?, ?, ?)
+            ''', (nombres, apellidos, email, idrol, image_data))
+            messagebox.showinfo("Éxito", "Usuario agregado correctamente")
+            self.populate_tree()
+            self.clear_form()
+        else:
+            messagebox.showerror("Error", "Todos los campos son obligatorios")
