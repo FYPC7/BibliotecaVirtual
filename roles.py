@@ -56,3 +56,16 @@ class RolesApp(ttk.Frame):
         for rol in roles:
             self.tree.insert('', tk.END, values=rol)
         connection.close()
+
+    def add_rol(self):
+        nombre = self.nombre_entry.get()
+
+        if nombre:
+            self.execute_query('''
+                INSERT INTO roles (NOMBRE) 
+                VALUES (?)
+            ''', (nombre,))
+            messagebox.showinfo("Éxito", "Rol agregado correctamente")
+            self.populate_tree()
+        else:
+            messagebox.showerror("Error", "El campo nombre es obligatorio")
