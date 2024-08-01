@@ -50,3 +50,25 @@ class LibrosApp(ttk.Frame):
 
         # Cargar datos
         self.populate_tree()
+
+    def create_form(self):
+        
+        self.titulo_label = ttk.Label(self.form_frame, text="Título:", font=('Helvetica', 12))
+        self.titulo_label.grid(row=0, column=0, padx=5, pady=5, sticky='e')
+        self.titulo_entry = ttk.Entry(self.form_frame, width=30, font=('Helvetica', 12))
+        self.titulo_entry.grid(row=0, column=1, padx=5, pady=5, sticky='w')
+
+        self.autor_label = ttk.Label(self.form_frame, text="Autor:", font=('Helvetica', 12))
+        self.autor_label.grid(row=1, column=0, padx=5, pady=5, sticky='e')
+        self.autor_entry = ttk.Entry(self.form_frame, width=30, font=('Helvetica', 12))
+        self.autor_entry.grid(row=1, column=1, padx=5, pady=5, sticky='w')
+
+        self.categoria_label = ttk.Label(self.form_frame, text="ID Categoría:", font=('Helvetica', 12))
+        self.categoria_label.grid(row=2, column=0, padx=5, pady=5, sticky='e')
+        self.categoria_entry = ttk.Entry(self.form_frame, width=30, font=('Helvetica', 12))
+        self.categoria_entry.grid(row=2, column=1, padx=5, pady=5, sticky='w')
+
+        self.isbn_label = ttk.Label(self.form_frame, text="ISBN:", font=('Helvetica', 12))
+        self.isbn_label.grid(row=3, column=0, padx=5, pady=5, sticky='e')
+        self.isbn_entry = ttk.Entry(self.form_frame, width=30, font=('Helvetica', 12))
+        self.isbn_entry.grid(row=3, column=1, padx=5, pady=5, sticky='w')
