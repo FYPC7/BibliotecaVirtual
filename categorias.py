@@ -183,3 +183,10 @@ class CategoriasApp(ttk.Frame):
         for index, (val, child) in enumerate(data_list):
             self.tree.move(child, '', index)
         self.tree.heading(col, command=lambda: self.sort_column(col, not reverse))
+
+    def on_tree_select(self, event):
+        selected_item = self.tree.selection()
+        if selected_item:
+            item = self.tree.item(selected_item)
+            self.nombre_entry.delete(0, tk.END)
+            self.nombre_entry.insert(0, item['values'][1])
