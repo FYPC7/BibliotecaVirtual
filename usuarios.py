@@ -54,3 +54,30 @@ class UsuariosApp(ttk.Frame):
         self.photo_label.grid(row=4, column=0)
         self.photo_button = ttk.Button(self.form_frame, text="Seleccionar imagen", command=self.load_image)
         self.photo_button.grid(row=4, column=1)
+
+    def create_buttons(self):
+        self.add_button = ttk.Button(self.form_frame, text="Agregar", command=self.add_usuario)
+        self.add_button.grid(row=5, column=0, pady=10)
+
+        self.edit_button = ttk.Button(self.form_frame, text="Editar", command=self.edit_usuario)
+        self.edit_button.grid(row=5, column=1, pady=10)
+
+        self.delete_button = ttk.Button(self.form_frame, text="Eliminar", command=self.delete_usuario)
+        self.delete_button.grid(row=5, column=2, pady=10)
+
+        self.search_label = ttk.Label(self.form_frame, text="Buscar:")
+        self.search_label.grid(row=6, column=0)
+        self.search_entry = ttk.Entry(self.form_frame)
+        self.search_entry.grid(row=6, column=1)
+
+        self.search_button = ttk.Button(self.form_frame, text="Buscar", command=self.search_usuario)
+        self.search_button.grid(row=6, column=2)
+
+        self.generate_button = ttk.Button(self.form_frame, text="Generar Carnet", command=self.generate_carnet)
+        self.generate_button.grid(row=7, column=1, pady=10)
+
+        self.import_button = ttk.Button(self.form_frame, text="Importar Excel", command=self.import_excel)
+        self.import_button.grid(row=8, column=0, pady=10)
+
+        self.export_button = ttk.Button(self.form_frame, text="Exportar Excel", command=self.export_excel)
+        self.export_button.grid(row=8, column=1, pady=10)
