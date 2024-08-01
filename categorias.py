@@ -190,3 +190,14 @@ class CategoriasApp(ttk.Frame):
             item = self.tree.item(selected_item)
             self.nombre_entry.delete(0, tk.END)
             self.nombre_entry.insert(0, item['values'][1])
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Gestión de Categorías")
+    root.geometry("400x400")
+    root.rowconfigure(0, weight=1)
+    root.columnconfigure(0, weight=1)
+    app = CategoriasApp(root)
+    app.grid(sticky='nsew')
+    root.mainloop()
+
