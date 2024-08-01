@@ -229,3 +229,12 @@ class LibrosApp(ttk.Frame):
                 messagebox.showinfo("Éxito", "Archivo exportado correctamente")
             except Exception as e:
                 messagebox.showerror("Error", f"No se pudo exportar el archivo: {e}")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Gestión de Libros")
+    root.geometry("800x500")
+    root.configure(bg='#f0f0f0')  # Fondo de la ventana principal
+    app = LibrosApp(root)
+    app.pack(expand=True, fill='both')
+    root.mainloop()
