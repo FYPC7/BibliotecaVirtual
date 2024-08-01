@@ -66,3 +66,24 @@ class LoginApp(tk.Tk):
             app.mainloop()
         else:
             messagebox.showerror("Error", "Invalid credentials or role")
+
+
+class MainApp(tk.Tk):
+    def __init__(self, role):
+        super().__init__()
+
+        self.role = role
+        self.title("BIBLIOTECA UNIVERSITARIA")
+        self.geometry("1200x800")
+
+        self.style = ttk.Style(self)
+        self.configure_style()
+
+        self.create_header()
+
+        self.notebook = ttk.Notebook(self, style="Custom.TNotebook")
+        self.notebook.pack(expand=True, fill='both', padx=20, pady=20)
+
+        self.add_tabs()
+
+        self.conn = sqlite3.connect('library.db')
