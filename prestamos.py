@@ -63,3 +63,10 @@ class PrestamosApp(ttk.Frame):
 
         self.create_table()
         self.populate_tree()
+
+    def execute_query(self, query, parameters=()):
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute(query, parameters)
+        connection.commit()
+        connection.close()
