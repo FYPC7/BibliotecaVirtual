@@ -132,3 +132,28 @@ class LibrosAutoresApp(ttk.Frame):
     def clear_form(self):
         self.idlibro_entry.delete(0, tk.END)
         self.idautor_entry.delete(0, tk.END)
+
+    def search_libro_autor(self):
+        search_term = self.search_entry.get()
+
+        if search_term:
+            try:
+                connection = sqlite3.connect('biblioteca.db')
+                cursor = connection.cursor()
+                cursor.execute('''
+                    SELECT * FROM libros_autores 
+                    WHERE idlibro LIKE ? OR idautor LIKE ?
+                ''', (f'%{search_term}%', f'%{search_term}%'))
+                libros_autores = cursor.fetchall()
+
+                for row in self.tree.get_children():
+                    self.tree.delete(row)
+
+                for libro_autor in libros_autores:
+                    self.tree.insert('', tk.END, values=libro_autor)
+            except sqlite3.Error as e:
+                messagebox.showerror("Error en la base de datos", str(e))
+            finally:
+                connection.close()
+        else:
+            self.populate_tree()
