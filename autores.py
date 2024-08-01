@@ -191,3 +191,15 @@ class AutoresApp(ttk.Frame):
                 self.populate_tree()
             except Exception as e:
                 messagebox.showerror("Error", f"Error al importar datos: {e}")
+
+    def export_excel(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")])
+        if file_path:
+            try:
+                connection = sqlite3.connect('biblioteca.db')
+                df = pd.read_sql_query('SELECT * FROM autores', connection)
+                df.to_excel(file_path, index=False)
+                messagebox.showinfo("Éxito", "Datos exportados correctamente")
+                connection.close()
+            except Exception as e:
+                messagebox.showerror("Error", f"Error al exportar datos: {e}")
