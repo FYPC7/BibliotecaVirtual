@@ -72,3 +72,25 @@ class LibrosApp(ttk.Frame):
         self.isbn_label.grid(row=3, column=0, padx=5, pady=5, sticky='e')
         self.isbn_entry = ttk.Entry(self.form_frame, width=30, font=('Helvetica', 12))
         self.isbn_entry.grid(row=3, column=1, padx=5, pady=5, sticky='w')
+
+    def create_buttons(self):
+      
+        button_frame = ttk.Frame(self.form_frame)
+        button_frame.grid(row=4, column=0, columnspan=2, pady=10)
+
+        self.add_button = ttk.Button(button_frame, text="Agregar", command=self.add_libro)
+        self.add_button.grid(row=0, column=0, padx=5)
+
+        self.edit_button = ttk.Button(button_frame, text="Editar", command=self.edit_libro)
+        self.edit_button.grid(row=0, column=1, padx=5)
+
+        self.delete_button = ttk.Button(button_frame, text="Eliminar", command=self.delete_libro)
+        self.delete_button.grid(row=0, column=2, padx=5)
+
+        self.search_label = ttk.Label(self.form_frame, text="Buscar:", font=('Helvetica', 12))
+        self.search_label.grid(row=5, column=0, padx=5, pady=5, sticky='e')
+        self.search_entry = ttk.Entry(self.form_frame, width=30, font=('Helvetica', 12))
+        self.search_entry.grid(row=5, column=1, padx=5, pady=5, sticky='w')
+
+        self.search_button = ttk.Button(self.form_frame, text="Buscar", command=self.search_libro)
+        self.search_button.grid(row=5, column=2, padx=5)
