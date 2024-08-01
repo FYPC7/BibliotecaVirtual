@@ -157,3 +157,11 @@ class LibrosAutoresApp(ttk.Frame):
                 connection.close()
         else:
             self.populate_tree()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Gestión de Libros y Autores")
+    root.geometry("400x400")
+    app = LibrosAutoresApp(root)
+    app.pack(expand=True, fill='both')
+    root.mainloop()
