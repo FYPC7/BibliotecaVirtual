@@ -148,3 +148,9 @@ class AutoresApp(ttk.Frame):
                 self.clear_form()
         else:
             messagebox.showerror("Error", "Por favor, selecciona un autor para eliminar")
+
+    def clear_form(self):
+        self.nombres_entry.delete(0, tk.END)
+        self.apellidos_entry.delete(0, tk.END)
+        self.dni_entry.delete(0, tk.END)
+        self.nacionalidad_entry.delete(0, tk.END)
