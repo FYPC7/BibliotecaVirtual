@@ -51,3 +51,9 @@ class CategoriasApp(ttk.Frame):
         for col in self.tree['columns']:
             self.tree.heading(col, text=col, command=lambda c=col: self.sort_column(c, False))
 
+    def execute_query(self, query, parameters=()):
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute(query, parameters)
+        connection.commit()
+        connection.close()
