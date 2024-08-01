@@ -109,3 +109,18 @@ def add_column_to_table():
         print(f"Error al agregar columna ISBN: {e}")
     finally:
         connection.close()
+
+def export_to_excel():
+    try:
+        connection = sqlite3.connect('biblioteca.db')
+
+        # Exportar cada tabla a un DataFrame y luego a un archivo Excel
+        with pd.ExcelWriter('biblioteca.xlsx', engine='openpyxl') as writer:
+            for table in ['autores', 'categorias', 'libros', 'libros_autores', 'prestamos', 'roles', 'usuarios']:
+                df = pd.read_sql_query(f"SELECT * FROM {table}", connection)
+                df.to_excel(writer, sheet_name=table, index=False)
+        print("Datos exportados a Excel exitosamente.")
+    except Exception as e:
+        print(f"Error al exportar datos a Excel: {e}")
+    finally:
+        connection.close()
