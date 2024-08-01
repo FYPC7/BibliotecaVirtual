@@ -69,3 +69,21 @@ class RolesApp(ttk.Frame):
             self.populate_tree()
         else:
             messagebox.showerror("Error", "El campo nombre es obligatorio")
+            
+    def edit_rol(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            nombre = self.nombre_entry.get()
+            rol_id = self.tree.item(selected_item)['values'][0]
+
+            if nombre:
+                self.execute_query('''
+                    UPDATE roles SET NOMBRE=? WHERE idrol=?
+                ''', (nombre, rol_id))
+                messagebox.showinfo("Éxito", "Rol actualizado correctamente")
+                self.populate_tree()
+                self.clear_form()
+            else:
+                messagebox.showerror("Error", "El campo nombre es obligatorio")
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un rol para editar")
