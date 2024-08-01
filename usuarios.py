@@ -301,3 +301,12 @@ class UsuariosApp(ttk.Frame):
                 messagebox.showinfo("Éxito", f"Datos exportados correctamente al archivo {file_path}")
             except Exception as e:
                 messagebox.showerror("Error", f"Error al exportar datos al archivo Excel: {e}")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Gestión de Usuarios")
+    root.geometry("600x500")
+    app = UsuariosApp(root)
+    app.pack(expand=True, fill='both')
+    root.mainloop()
+
