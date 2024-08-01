@@ -45,3 +45,14 @@ class RolesApp(ttk.Frame):
         connection.commit()
         connection.close()
 
+    def populate_tree(self):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM roles')
+        roles = cursor.fetchall()
+        for rol in roles:
+            self.tree.insert('', tk.END, values=rol)
+        connection.close()
