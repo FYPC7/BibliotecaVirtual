@@ -264,3 +264,40 @@ class UsuariosApp(ttk.Frame):
                 messagebox.showinfo("Éxito", "Datos importados correctamente desde el archivo Excel")
             except Exception as e:
                 messagebox.showerror("Error", f"Error al importar datos desde el archivo Excel: {e}")
+
+    def import_excel(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
+        if file_path:
+            try:
+                df = pd.read_excel(file_path)
+                connection = sqlite3.connect('biblioteca.db')
+                cursor = connection.cursor()
+
+                for _, row in df.iterrows():
+                    cursor.execute('''
+                        INSERT INTO usuarios (NOMBRES, APELLIDOS, EMAIL, idrol)
+                        VALUES (?, ?, ?, ?)
+                    ''', (row['NOMBRES'], row['APELLIDOS'], row['EMAIL'], row['idrol']))
+                
+                connection.commit()
+                connection.close()
+                self.populate_tree()
+                messagebox.showinfo("Éxito", "Datos importados correctamente desde el archivo Excel")
+            except Exception as e:
+                messagebox.showerror("Error", f"Error al importar datos desde el archivo Excel: {e}")
+
+    def export_excel(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel files", "*.xlsx")])
+        if file_path:
+            try:
+                connection = sqlite3.connect('biblioteca.db')
+                cursor = connection.cursor()
+                cursor.execute('SELECT idusuario, NOMBRES, APELLIDOS, EMAIL, idrol FROM usuarios')
+                usuarios = cursor.fetchall()
+                connection.close()
+
+                df = pd.DataFrame(usuarios, columns=['ID', 'NOMBRES', 'APELLIDOS', 'EMAIL', 'idrol'])
+                df.to_excel(file_path, index=False)
+                messagebox.showinfo("Éxito", f"Datos exportados correctamente al archivo {file_path}")
+            except Exception as e:
+                messagebox.showerror("Error", f"Error al exportar datos al archivo Excel: {e}")
