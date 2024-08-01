@@ -204,3 +204,16 @@ class LibrosApp(ttk.Frame):
             connection.close()
         else:
             self.populate_tree()
+
+    def import_excel(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
+        if file_path:
+            try:
+                data = pd.read_excel(file_path)
+                connection = sqlite3.connect('biblioteca.db')
+                data.to_sql('libros', connection, if_exists='append', index=False)
+                connection.close()
+                messagebox.showinfo("Éxito", "Archivo importado correctamente")
+                self.populate_tree()
+            except Exception as e:
+                messagebox.showerror("Error", f"No se pudo importar el archivo: {e}")
