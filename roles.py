@@ -128,3 +128,11 @@ class RolesApp(ttk.Frame):
             connection.close()
         else:
             self.populate_tree()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Gestión de Roles")
+    root.geometry("400x400")
+    app = RolesApp(root)
+    app.pack(expand=True, fill='both')
+    root.mainloop()
