@@ -154,3 +154,25 @@ class AutoresApp(ttk.Frame):
         self.apellidos_entry.delete(0, tk.END)
         self.dni_entry.delete(0, tk.END)
         self.nacionalidad_entry.delete(0, tk.END)
+
+    def search_autor(self):
+        search_term = self.search_entry.get()
+
+        if search_term:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT * FROM autores 
+                WHERE NOMBRES LIKE ? OR APELLIDOS LIKE ? OR DNI LIKE ? OR NACIONALIDAD LIKE ?
+            ''', (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
+            autores = cursor.fetchall()
+
+            for row in self.tree.get_children():
+                self.tree.delete(row)
+
+            for autor in autores:
+                self.tree.insert('', tk.END, values=autor)
+            
+            connection.close()
+        else:
+            self.populate_tree()
