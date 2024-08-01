@@ -217,3 +217,15 @@ class LibrosApp(ttk.Frame):
                 self.populate_tree()
             except Exception as e:
                 messagebox.showerror("Error", f"No se pudo importar el archivo: {e}")
+
+    def export_excel(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel files", "*.xlsx")])
+        if file_path:
+            try:
+                connection = sqlite3.connect('biblioteca.db')
+                data = pd.read_sql_query("SELECT * FROM libros", connection)
+                data.to_excel(file_path, index=False)
+                connection.close()
+                messagebox.showinfo("Éxito", "Archivo exportado correctamente")
+            except Exception as e:
+                messagebox.showerror("Error", f"No se pudo exportar el archivo: {e}")
