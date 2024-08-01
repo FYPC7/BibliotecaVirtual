@@ -124,3 +124,8 @@ def export_to_excel():
         print(f"Error al exportar datos a Excel: {e}")
     finally:
         connection.close()
+
+if __name__ == "__main__":
+    create_tables()
+    add_column_to_table()
+    export_to_excel()
