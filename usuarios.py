@@ -81,3 +81,15 @@ class UsuariosApp(ttk.Frame):
 
         self.export_button = ttk.Button(self.form_frame, text="Exportar Excel", command=self.export_excel)
         self.export_button.grid(row=8, column=1, pady=10)
+
+    def execute_query(self, query, parameters=()):
+        try:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute(query, parameters)
+            connection.commit()
+        except sqlite3.Error as e:
+            messagebox.showerror("Error", f"Database error: {e}")
+        finally:
+            connection.close()
+
