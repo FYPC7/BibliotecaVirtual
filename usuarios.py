@@ -105,3 +105,12 @@ class UsuariosApp(ttk.Frame):
             self.tree.insert('', tk.END, values=usuario)
         connection.close()
 
+    def load_image(self):
+        file_path = filedialog.askopenfilename(filetypes=[("PNG files", "*.png")])
+        if file_path:
+            self.image_path = file_path
+            img = Image.open(file_path)
+            img.thumbnail((100, 100))  # Redimensiona la imagen a un tamaño pequeño
+            self.profile_image = ImageTk.PhotoImage(img)
+            self.photo_label.configure(image=self.profile_image)
+            self.photo_label.image = self.profile_image
