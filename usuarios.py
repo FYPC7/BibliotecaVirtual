@@ -200,3 +200,25 @@ class UsuariosApp(ttk.Frame):
             connection.close()
         else:
             self.populate_tree()
+
+
+    def import_excel(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
+        if file_path:
+            try:
+                df = pd.read_excel(file_path)
+                connection = sqlite3.connect('biblioteca.db')
+                cursor = connection.cursor()
+
+                for _, row in df.iterrows():
+                    cursor.execute('''
+                        INSERT INTO usuarios (NOMBRES, APELLIDOS, EMAIL, idrol)
+                        VALUES (?, ?, ?, ?)
+                    ''', (row['NOMBRES'], row['APELLIDOS'], row['EMAIL'], row['idrol']))
+                
+                connection.commit()
+                connection.close()
+                self.populate_tree()
+                messagebox.showinfo("Éxito", "Datos importados correctamente desde el archivo Excel")
+            except Exception as e:
+                messagebox.showerror("Error", f"Error al importar datos desde el archivo Excel: {e}")
