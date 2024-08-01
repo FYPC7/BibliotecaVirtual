@@ -176,3 +176,9 @@ class LibrosApp(ttk.Frame):
                 self.clear_form()
         else:
             messagebox.showerror("Error", "Por favor, selecciona un libro para eliminar")
+
+    def clear_form(self):
+        self.titulo_entry.delete(0, tk.END)
+        self.categoria_entry.delete(0, tk.END)
+        self.autor_entry.delete(0, tk.END)
+        self.isbn_entry.delete(0, tk.END)
