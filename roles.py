@@ -106,3 +106,25 @@ class RolesApp(ttk.Frame):
 
     def clear_form(self):
         self.nombre_entry.delete(0, tk.END)
+
+    def search_rol(self):
+        search_term = self.search_entry.get()
+
+        if search_term:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT * FROM roles 
+                WHERE NOMBRE LIKE ?
+            ''', (f'%{search_term}%',))
+            roles = cursor.fetchall()
+
+            for row in self.tree.get_children():
+                self.tree.delete(row)
+
+            for rol in roles:
+                self.tree.insert('', tk.END, values=rol)
+            
+            connection.close()
+        else:
+            self.populate_tree()
