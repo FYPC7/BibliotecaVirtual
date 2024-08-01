@@ -57,3 +57,11 @@ class CategoriasApp(ttk.Frame):
         cursor.execute(query, parameters)
         connection.commit()
         connection.close()
+
+    def create_table(self):
+        self.execute_query('''
+            CREATE TABLE IF NOT EXISTS categorias (
+                idcategoria TEXT PRIMARY KEY,
+                NOMBRE TEXT NOT NULL
+            )
+        ''')
