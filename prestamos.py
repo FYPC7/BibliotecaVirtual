@@ -93,3 +93,20 @@ class PrestamosApp(ttk.Frame):
         for prestamo in prestamos:
             self.tree.insert('', tk.END, values=prestamo)
         connection.close()
+
+    def add_prestamo(self):
+        idlibro = self.idlibro_entry.get()
+        idusuario = self.idusuario_entry.get()
+        fecha_prestamo = self.fecha_prestamo_entry.get()
+        fecha_devolucion = self.fecha_devolucion_entry.get()
+
+        if idlibro and idusuario and fecha_prestamo:
+            self.execute_query('''
+                INSERT INTO prestamos (idlibro, idusuario, fecha_prestamo, fecha_devolucion) 
+                VALUES (?, ?, ?, ?)
+            ''', (idlibro, idusuario, fecha_prestamo, fecha_devolucion))
+            messagebox.showinfo("Éxito", "Préstamo agregado correctamente")
+            self.populate_tree()
+            self.clear_form()
+        else:
+            messagebox.showerror("Error", "Todos los campos son obligatorios")
