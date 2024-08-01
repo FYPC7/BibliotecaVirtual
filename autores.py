@@ -111,3 +111,24 @@ class AutoresApp(ttk.Frame):
             self.clear_form()
         else:
             messagebox.showerror("Error", "Todos los campos son obligatorios")
+
+    def edit_autor(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            nombres = self.nombres_entry.get()
+            apellidos = self.apellidos_entry.get()
+            dni = self.dni_entry.get()
+            nacionalidad = self.nacionalidad_entry.get()
+            autor_id = self.tree.item(selected_item)['values'][0]
+
+            if nombres and apellidos and dni and nacionalidad:
+                self.execute_query('''
+                    UPDATE autores SET NOMBRES=?, APELLIDOS=?, DNI=?, NACIONALIDAD=? WHERE idautor=?
+                ''', (nombres, apellidos, dni, nacionalidad, autor_id))
+                messagebox.showinfo("Éxito", "Autor actualizado correctamente")
+                self.populate_tree()
+                self.clear_form()
+            else:
+                messagebox.showerror("Error", "Todos los campos son obligatorios")
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un autor para editar")
