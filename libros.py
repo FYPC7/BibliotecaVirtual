@@ -103,3 +103,10 @@ class LibrosApp(ttk.Frame):
 
         self.export_button = ttk.Button(import_export_frame, text="Exportar Excel", command=self.export_excel)
         self.export_button.grid(row=0, column=1, padx=5)
+
+    def execute_query(self, query, parameters=()):
+        connection = sqlite3.connect('biblioteca.db')
+        cursor = connection.cursor()
+        cursor.execute(query, parameters)
+        connection.commit()
+        connection.close()
