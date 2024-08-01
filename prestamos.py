@@ -70,3 +70,14 @@ class PrestamosApp(ttk.Frame):
         cursor.execute(query, parameters)
         connection.commit()
         connection.close()
+
+    def create_table(self):
+        self.execute_query('''
+            CREATE TABLE IF NOT EXISTS prestamos (
+                idprestamo INTEGER PRIMARY KEY AUTOINCREMENT,
+                idlibro TEXT NOT NULL,
+                idusuario TEXT NOT NULL,
+                fecha_prestamo TEXT NOT NULL,
+                fecha_devolucion TEXT
+            )
+        ''')
