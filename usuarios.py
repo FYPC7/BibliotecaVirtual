@@ -154,3 +154,19 @@ class UsuariosApp(ttk.Frame):
                 messagebox.showerror("Error", "Todos los campos son obligatorios")
         else:
             messagebox.showerror("Error", "Por favor, selecciona un usuario para editar")
+
+    def delete_usuario(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            usuario_id = self.tree.item(selected_item)['values'][0]
+
+            confirm = messagebox.askyesno("Confirmar", "¿Estás seguro de querer eliminar este usuario?")
+            if confirm:
+                self.execute_query('''
+                    DELETE FROM usuarios WHERE idusuario=?
+                ''', (usuario_id,))
+                messagebox.showinfo("Éxito", "Usuario eliminado correctamente")
+                self.populate_tree()
+                self.clear_form()
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un usuario para eliminar")
