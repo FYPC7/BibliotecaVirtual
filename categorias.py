@@ -29,4 +29,25 @@ class CategoriasApp(ttk.Frame):
         self.nombre_label.grid(row=0, column=0, padx=5, pady=5)
         self.nombre_entry = ttk.Entry(self.form_frame)
         self.nombre_entry.grid(row=0, column=1, padx=5, pady=5)
-    
+
+         
+        self.add_button = ttk.Button(self.form_frame, text="Agregar", command=self.add_categoria)
+        self.add_button.grid(row=1, column=0, columnspan=2, pady=10)
+
+        self.edit_button = ttk.Button(self.form_frame, text="Editar", command=self.edit_categoria)
+        self.edit_button.grid(row=2, column=0, pady=10)
+
+        self.delete_button = ttk.Button(self.form_frame, text="Eliminar", command=self.delete_categoria)
+        self.delete_button.grid(row=2, column=1, pady=10)
+
+        self.search_label = ttk.Label(self.form_frame, text="Buscar:")
+        self.search_label.grid(row=3, column=0, padx=5, pady=5)
+        self.search_entry = ttk.Entry(self.form_frame)
+        self.search_entry.grid(row=3, column=1, padx=5, pady=5)
+
+        self.search_button = ttk.Button(self.form_frame, text="Buscar", command=self.search_categoria)
+        self.search_button.grid(row=3, column=2, padx=5, pady=5)
+
+        for col in self.tree['columns']:
+            self.tree.heading(col, text=col, command=lambda c=col: self.sort_column(c, False))
+
