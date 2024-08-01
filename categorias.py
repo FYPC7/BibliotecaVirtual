@@ -125,3 +125,6 @@ class CategoriasApp(ttk.Frame):
                 self.populate_tree()
         else:
             messagebox.showerror("Error", "Por favor, selecciona una categoría para eliminar")
+
+    def clear_form(self):
+        self.nombre_entry.delete(0, tk.END)
