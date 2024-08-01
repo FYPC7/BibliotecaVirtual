@@ -128,3 +128,25 @@ class CategoriasApp(ttk.Frame):
 
     def clear_form(self):
         self.nombre_entry.delete(0, tk.END)
+
+    def search_categoria(self):
+        search_term = self.search_entry.get()
+
+        if search_term:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT * FROM categorias 
+                WHERE NOMBRE LIKE ?
+            ''', (f'%{search_term}%',))
+            categorias = cursor.fetchall()
+
+            for row in self.tree.get_children():
+                self.tree.delete(row)
+
+            for categoria in categorias:
+                self.tree.insert('', tk.END, values=categoria)
+            
+            connection.close()
+        else:
+            self.populate_tree()
