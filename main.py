@@ -24,3 +24,33 @@ class LoginApp(tk.Tk):
 
         # Crear los widgets
         self.create_widgets()
+        
+     def create_widgets(self):
+        welcome_label = ttk.Label(
+            self, 
+            text="BIENVENIDO A LA BIBLIOTECA UNIVERSITARIA", 
+            foreground='#ECF0F1', 
+            font=("Verdana", 14, "bold"),
+            background='#2C3E50'
+        )
+        welcome_label.pack(pady=(20, 10))
+
+        self.role_label = ttk.Label(self, text="Role:", foreground='#ECF0F1', background='#2C3E50')
+        self.role_label.pack(pady=6)
+        self.role_combobox = ttk.Combobox(self, values=["admin", "bibliotecario", "estudiante"], state='readonly')
+        self.role_combobox.set("admin")  
+        self.role_combobox.pack(pady=6)
+
+        self.username_label = ttk.Label(self, text="Username:", foreground='#ECF0F1', background='#2C3E50')
+        self.username_label.pack(pady=(6, 6))
+        self.username_entry = ttk.Entry(self, width=30)
+        self.username_entry.pack(pady=6)
+
+        self.password_label = ttk.Label(self, text="Password:", foreground='#ECF0F1', background='#2C3E50')
+        self.password_label.pack(pady=6)
+        self.password_entry = ttk.Entry(self, show="*", width=30)
+        self.password_entry.pack(pady=6)
+
+        self.login_button = ttk.Button(self, text="INGRESAR", command=self.check_credentials, width=15)
+        self.login_button.pack(pady=20)
+
