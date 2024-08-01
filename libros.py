@@ -182,3 +182,25 @@ class LibrosApp(ttk.Frame):
         self.categoria_entry.delete(0, tk.END)
         self.autor_entry.delete(0, tk.END)
         self.isbn_entry.delete(0, tk.END)
+
+    def search_libro(self):
+        search_term = self.search_entry.get()
+
+        if search_term:
+            connection = sqlite3.connect('biblioteca.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT * FROM libros 
+                WHERE TITULO LIKE ? OR idcategoria LIKE ? OR AUTOR LIKE ? OR ISBN LIKE ?
+            ''', (f'%{search_term}%', f'%{search_term}%', f'%{search_term}%', f'%{search_term}%'))
+            libros = cursor.fetchall()
+
+            for row in self.tree.get_children():
+                self.tree.delete(row)
+
+            for libro in libros:
+                self.tree.insert('', tk.END, values=libro)
+            
+            connection.close()
+        else:
+            self.populate_tree()
