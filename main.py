@@ -142,3 +142,15 @@ class MainApp(tk.Tk):
 
         title_label = ttk.Label(header_frame, text="BIBLIOTECA UNIVERSITARIA", style="Header.TLabel")
         title_label.pack(side='left', padx=(10, 0))
+
+    def add_tabs(self):
+        if self.role in ["admin", "bibliotecario", "estudiante"]:
+            self.add_tab(LibrosApp, "Libros")
+        if self.role in ["admin", "bibliotecario"]:
+            self.add_tab(AutoresApp, "Autores")
+            self.add_tab(CategoriasApp, "Categorías")
+            self.add_tab(LibrosAutoresApp, "Libros y Autores")
+            self.add_tab(PrestamosApp, "Préstamos")
+        if self.role == "admin":
+            self.add_tab(RolesApp, "Roles")
+            self.add_tab(UsuariosApp, "Usuarios")
