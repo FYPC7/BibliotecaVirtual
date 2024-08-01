@@ -155,10 +155,13 @@ class MainApp(tk.Tk):
             self.add_tab(RolesApp, "Roles")
             self.add_tab(UsuariosApp, "Usuarios")
 
-
     def add_tab(self, frame_class, text):
         frame = frame_class(self.notebook)
         if self.role == "estudiante" and text != "Libros":
             for child in frame.winfo_children():
                 child.configure(state='disabled')
         self.notebook.add(frame, text=text)
+
+if __name__ == "__main__":
+    login_app = LoginApp()
+    login_app.mainloop()
