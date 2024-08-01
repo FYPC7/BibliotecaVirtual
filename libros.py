@@ -94,3 +94,12 @@ class LibrosApp(ttk.Frame):
 
         self.search_button = ttk.Button(self.form_frame, text="Buscar", command=self.search_libro)
         self.search_button.grid(row=5, column=2, padx=5)
+
+        import_export_frame = ttk.Frame(self.form_frame)
+        import_export_frame.grid(row=6, column=0, columnspan=3, pady=10)
+
+        self.import_button = ttk.Button(import_export_frame, text="Importar Excel", command=self.import_excel)
+        self.import_button.grid(row=0, column=0, padx=5)
+
+        self.export_button = ttk.Button(import_export_frame, text="Exportar Excel", command=self.export_excel)
+        self.export_button.grid(row=0, column=1, padx=5)
