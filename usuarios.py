@@ -133,3 +133,24 @@ class UsuariosApp(ttk.Frame):
             self.clear_form()
         else:
             messagebox.showerror("Error", "Todos los campos son obligatorios")
+
+    def edit_usuario(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            nombres = self.nombres_entry.get()
+            apellidos = self.apellidos_entry.get()
+            email = self.email_entry.get()
+            idrol = self.idrol_entry.get()
+            usuario_id = self.tree.item(selected_item)['values'][0]
+
+            if nombres and apellidos and email and idrol:
+                self.execute_query('''
+                    UPDATE usuarios SET NOMBRES=?, APELLIDOS=?, EMAIL=?, idrol=? WHERE idusuario=?
+                ''', (nombres, apellidos, email, idrol, usuario_id))
+                messagebox.showinfo("Éxito", "Usuario actualizado correctamente")
+                self.populate_tree()
+                self.clear_form()
+            else:
+                messagebox.showerror("Error", "Todos los campos son obligatorios")
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un usuario para editar")
