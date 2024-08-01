@@ -132,3 +132,19 @@ class AutoresApp(ttk.Frame):
                 messagebox.showerror("Error", "Todos los campos son obligatorios")
         else:
             messagebox.showerror("Error", "Por favor, selecciona un autor para editar")
+
+    def delete_autor(self):
+        selected_item = self.tree.selection()
+        if selected_item:
+            autor_id = self.tree.item(selected_item)['values'][0]
+
+            confirm = messagebox.askyesno("Confirmar", "¿Estás seguro de querer eliminar este autor?")
+            if confirm:
+                self.execute_query('''
+                    DELETE FROM autores WHERE idautor=?
+                ''', (autor_id,))
+                messagebox.showinfo("Éxito", "Autor eliminado correctamente")
+                self.populate_tree()
+                self.clear_form()
+        else:
+            messagebox.showerror("Error", "Por favor, selecciona un autor para eliminar")
