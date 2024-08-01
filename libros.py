@@ -39,3 +39,14 @@ class LibrosApp(ttk.Frame):
         self.tree.column('ISBN', width=150)
         self.tree.pack(expand=True, fill='both', padx=10, pady=10)
 
+        self.form_frame = ttk.Frame(self)
+        self.form_frame.pack(pady=10, padx=10, fill='x')
+
+        # Labels y Entries del formulario
+        self.create_form()
+
+        # Botones de acción
+        self.create_buttons()
+
+        # Cargar datos
+        self.populate_tree()
