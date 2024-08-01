@@ -170,3 +170,11 @@ class UsuariosApp(ttk.Frame):
                 self.clear_form()
         else:
             messagebox.showerror("Error", "Por favor, selecciona un usuario para eliminar")
+
+    def clear_form(self):
+        self.nombres_entry.delete(0, tk.END)
+        self.apellidos_entry.delete(0, tk.END)
+        self.email_entry.delete(0, tk.END)
+        self.idrol_entry.delete(0, tk.END)
+        self.image_path = None
+        self.photo_label.configure(image='')
